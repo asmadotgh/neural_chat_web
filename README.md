@@ -1,8 +1,9 @@
-# Dialog Project Django Server
+# Neural Chat Web
 
 ## Preparation - Key Concepts
 
-This is the server portion of the Dialog Chatbots project. It is expected to be accompanied by a separate repository containing the chatbots themselves. The system is engineered such that the two repositories can be maintained separately.
+This is the Django server portion of the Neural Chat project and is accompanied by another [**repository including our open-sourced dialog models**](https://github.com/natashamjaques/neural_chat). The system is engineered such that the two repositories can be maintained separately.
+You can interact with our models here: **http://neural.chat**. 
 
 The project is written in Django and contains setup and deployment scripts to configure Nginx, uWSGI, MySQL on a Unix environment.
 
@@ -63,8 +64,9 @@ And finally.... Don't skip any of these steps!
 #### Deploying a Chatbots project
 
 As mentioned above, this project is intended to import code from a separate, pre-existing Chatbots project.
+Use our [**Neural Chat**](https://github.com/natashamjaques/neural_chat) open-source project for a range of neural dialog models. 
 
-If you don't have one, now is the time to make one. We intend to upload a sample Chatbots open source project we will link to, but in the mean time, here's how to create one yourself:
+If you would like to create your own chatbot models, now is the time to make one. Here's how to create one yourself:
 
 * Create a new Github project. Copy dialog/chatbots.py to that project, and rename it web_chatbots.py. Edit it to remove all references to Django and settings. You can make any number of chatbots, so long as they implement the `Chatbot` class and use the `@registerbot()` decorator. They will all automatically be picked up by the Django project!
 * Create a virtual environment with Python 3.6. We recommend placing it in /opt/virtualenvironment/. Basically, run this command: `cd /opt/; virtualenv -p python3.6 virtualenvironment`
@@ -122,6 +124,8 @@ You can also download the data for a specific study by navigating to that study 
 
 The MIT License
 
+Copyright (c) 2019 Craig Ferguson, Natasha Jaques, Asma Ghandeharioun, Judy Shen, Noah Jones, Agata Lapedriza, Rosalind Picard
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -139,3 +143,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+## Reference
+If you use this code, please reference the following paper:
+
+```
+@article{ghandeharioun2019approximating,
+  title={Approximating Interactive Human Evaluation with Self-Play for Open-Domain Dialog Systems},
+  author={Ghandeharioun, Asma and Shen, Judy and Jaques, Natasha and Ferguson, Craig and Jones, Noah, and Lapedriza, Agata and Picard, Rosalind},
+  journal={arXiv preprint arXiv:},
+  year={2019}
+}
+```
