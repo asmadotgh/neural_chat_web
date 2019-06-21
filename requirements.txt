@@ -1,0 +1,11 @@
+Django==2.1.7
+inflect==2.1.0
+Jinja2==2.10
+jinja2-pluralize==0.3.0
+MarkupSafe==1.1.0
+pytz==2018.9
+simplejson==3.16.0
+mysqlclient==1.4.2.post1
+Fabric3==1.14.post1
+sqlparse==0.2.4
+PyMySQL==0.9.3

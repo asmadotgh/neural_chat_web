@@ -1,0 +1,274 @@
+{%  extends "base.html" %}
+
+{%  block content %}
+
+    {%  if chatbots.keys()|length > 0 %}
+
+    <div class="chat">
+        <div class="chatlines" id="chatlines-container">
+            <div id="chatlines">
+
+            </div>
+            <div class="chatline hidden" id="loading"><span class="votes"></span><span class="user"></span><span class="message"><span class="loading"></span></span></div>
+            <div class="chatline"><span class="votes"></span><span class="message">&gt;</span></div>
+        </div>
+        <div class="button close" id="close-and-rate">
+            <img src="/static/image/close.png">
+            <span>Close Chat and Rate</span>
+        </div>
+        <div class="inputarea">
+            <input class="input" id="message" name="message">
+            <button class="button" id="submit"><span class="text">SEND</span><img src="/static/image/loading.png" class="loading"></button>
+        </div>
+    </div>
+
+    <div id="robotchoices" class="window {% if chatbots|length <= 1 %}hidden{%  endif %}">
+        <div class="windowcontent">
+            <div class="title">Welcome To Empathy Learning Socially-aware Agents (E.L.S.A.)</div>
+            <div class="subtitle">Please Select Your Chat Experience</div>
+
+            <div class="chatbotchoicesborder">
+                <div class="chatbotchoices" id="chatbotchoices">
+                    {%  for chatbot in chatbots.values() %}
+                    <div class="choice" data-botid="{{  chatbot.id }}" data-name="{%  if study.is_random_bot %}Chatbot{%  else %}{{ chatbot.name }}{% endif %}">{{ chatbot.name }}</div>
+                    {%  endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chatrate" class="window ratewindow hidden">
+        <div class="windowcontent left widescreenonly chathistory" id="review-chat-history">
+            <h3>Chat History</h3>
+        </div>
+        <div class="windowcontent right" id="feedbackwindow">
+            <div class="title">Please Rate Your Chat Experience!</div>
+
+            <form action="{{ url('rate_chat') }}" method="post" id="rateform">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input type="hidden" id="chatbot_id" name="chatbot_id">
+                <input type="hidden" id="chat_id" name="chat_id">
+                <input type="hidden" id="study_key" name="study_key" value="{{ study.key or "" }}">
+                <div class="form-question likert">
+                    <div class="question-label">Overall, how was the <strong>QUALITY</strong> of the chat?</div>
+                    <div class="error-message">This Field is Required</div>
+                    <div class="radios">
+                        {% for i in range(7) %}
+                            <label class="radio">
+                                  <input type="radio" name="quality" value="{{ i + 1 }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="likert-labels">
+                        <div class="left">Very Poor</div>
+                        <div class="right">Very High</div>
+                    </div>
+                </div>
+                <div class="form-question likert">
+                    <div class="question-label">How <strong>DIVERSE (non-repetitive)</strong> were the chat bot’s responses?</div>
+                    <div class="error-message">This Field is Required</div>
+                    <div class="radios">
+                        {% for i in range(7) %}
+                            <label class="radio">
+                                  <input type="radio" name="diversity" value="{{ i + 1 }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="likert-labels">
+                        <div class="left">Not at All</div>
+                        <div class="right">Extremely</div>
+                    </div>
+                </div>
+                <div class="form-question likert">
+                    <div class="question-label">How <strong>FLUENT</strong> was the chat bot?<br>(i.e. did it use correct grammar and sentence structure)? </div>
+                    <div class="error-message">This Field is Required</div>
+                    <div class="radios">
+                        {% for i in range(7) %}
+                            <label class="radio">
+                                  <input type="radio" name="fluency" value="{{ i + 1 }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="likert-labels">
+                        <div class="left">Not at All</div>
+                        <div class="right">Extremely</div>
+                    </div>
+                </div>
+                <div class="form-question likert">
+                    <div class="question-label">How <strong>RELATED TO</strong> and <strong>CONTINGENT ON</strong> your messages were the chat bot’s responses?<br>(i.e. were the chat bot’s responses related to what you said?) </div>
+                    <div class="error-message">This Field is Required</div>
+                    <div class="radios">
+                        {% for i in range(7) %}
+                            <label class="radio">
+                                  <input type="radio" name="contingency" value="{{ i + 1 }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="likert-labels">
+                        <div class="left">Not at All</div>
+                        <div class="right">Extremely</div>
+                    </div>
+                </div>
+                <div class="form-question likert">
+                    <div class="question-label">How <strong>EMPATHETIC</strong> was the chat bot?<br>(i.e. did it respond in a <strong>supportive</strong> and <strong>emotionally appropriate</strong> way)? </div>
+                    <div class="error-message">This Field is Required</div>
+                    <div class="radios">
+                        {% for i in range(7) %}
+                            <label class="radio">
+                                  <input type="radio" name="empathy" value="{{ i + 1 }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    <div class="likert-labels">
+                        <div class="left">Not at All</div>
+                        <div class="right">Extremely</div>
+                    </div>
+                </div>
+                {%  if study.is_mturk %}
+                <div class="form-question text">
+                    <div class="question-label">Please paste your Mechanical Turk ID Here:</div>
+                    <textarea name="mturkUserId" placeholder="Mechanical Turk ID"></textarea>
+                </div>
+                {%  endif %}
+                <div class="form-question text">
+                    <div class="question-label">Any other thoughts about the chat in general?</div>
+                    <textarea name="comments" placeholder="Add comments here."></textarea>
+                </div>
+                <button class="button submit" type="submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="chatratethanks" class="window chatratethanks hidden">
+        <div class="windowcontent">
+            <div class="title">Thank You!</div>
+            <div class="subtitle">We appreciate your feedback!</div>
+
+            <div class="mturk" id="mturk-wrapper">
+                <div class="subtitle">Here's Your Mechanical Turk Code:</div>
+                <div class="help">Please copy it and paste it into Amazon Mechanical Turk</div>
+                <div class="mturk-code" id="mturk-code"></div>
+            </div>
+
+            <button class="button" id="confirm-close">Next Chatbot</button>
+
+        </div>
+    </div>
+    <div id="chatrateconfirm" class="window chatratethanks hidden">
+        <div class="windowcontent">
+            <div class="title">Are You Sure?</div>
+            <div class="subtitle">We recommend sending at least three messages. Are you sure you want to stop your conversation already?</div>
+
+            <div class="buttons-container">
+                <button class="button" id="cancel-rate">Go Back</button>
+                <button class="button confirm" id="confirm-rate">Quit</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="tutorial" class="window tutorial hidden">
+        <div class="windowcontent">
+            <div class="tutorialpage">
+                <div class="title titlebig">Welcome to E.L.S.A!</div>
+                <p>You're about to chat with an exciting chatbot! Before you begin, please read these quick instructions.</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            <div class="tutorialpage">
+                <div class="title">It Takes Time to Get to Know You!</div>
+                <p>In order to give the chatbot a chance to get to know you, please <strong>write at least THREE lines</strong> before ending your session.</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            <div class="tutorialpage">
+                <div class="title">Rate As You Go!</div>
+                <img src="/static/image/tutorial/upvotes.png">
+                <p>During chat, you can rate responses using "upvote/downvote" buttons next to each line the chatbot sends. Please use them to let the bot know how it's doing!</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            <div class="tutorialpage">
+                <div class="title">Chatbots Don't Know Every Word</div>
+                <p>During the chat, if you say a <strong>rare word</strong> or make a <strong>spelling mistake</strong>, the bot will see your word as "&lt;unknown&gt;".</p>
+                <p>It may also use "&lt;unknown&gt;" when talking about words outside its vocabulary.</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            <div class="tutorialpage">
+                <div class="title">Warning: May Contain Adult Content</div>
+                <p>These bots are trained on movie dialogs and Reddit data, and sometimes say inappropriate things. Chatter discretion is advised.</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            <div class="tutorialpage">
+                <div class="title">Let Us Know How The Chat Was</div>
+                <img src="/static/image/tutorial/closeandrate.png">
+                <p>When you are done chatting, please rate your chat experience by pressing the button in the top right of the screen.</p>
+                <button type="button" class="button nextbutton">Next</button>
+            </div>
+            {%  if study.is_mturk %}
+                <div class="tutorialpage">
+                    <div class="title">After You Rate, Keep Chatting!</div>
+                    <p>Once you have replied to the bot at least THREE times and feel you're done with your conversation, you can feel free to rate the current bot and go on to the next chat bot.
+                    <p>Please rate as many bots as you can so we can learn which ones work best! We really value your opinions and feedback!</p>
+                    <button type="button" class="button nextbutton">Next</button>
+                </div>
+                <div class="tutorialpage">
+                    <div class="title">Don't Forget Your Codes!</div>
+                    <p>After you are done talking to EACH chat bot, we will generate and display a code. Copy that code and enter it in the Amazon Mechanical Turk HIT interface.
+                    <p>You will receive one code per bot, remember to copy them all!</p>
+                    <button type="button" class="button nextbutton">Next</button>
+                </div>
+            {% endif %}
+            <div class="tutorialpage">
+                <div class="title">You're All Set!</div>
+                <p>Thank you for participating!</p>
+                <button type="button" class="button finishbutton">Start Chatting!</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="informedconsent" class="window hidden">
+        <div class="windowcontent consentform" id="informedconsentcontent">
+            <div class="title">Welcome to Empathy Learning Socially-aware Agents (E.L.S.A)</div>
+
+            <div class="subtitle">You're about to chat with an AI chat bot!</div>
+            <div class="subtitle">But first, we want you to know we value your privacy and data. So please read and agree to the following consent form before participating.</div>
+            <div class="consenttext">
+                <h2>Informed Consent</h2>
+                <p>
+                    [[ EDITME You should put your informed consent content here ]]
+                </p>
+                <p class="confirmtext">
+                Please confirm you agree to these conditions and that you are between 18 - 64 years of age.
+                </p>
+            </div>
+
+            <div class="consentbutton">
+                <button type="button" class="button">I Agree</button>
+            </div>
+        </div>
+    </div>
+
+    {%  else %}
+    <div class="window">
+        <div class="windowcontent">
+            <div class="title">No Chatbots Found!</div>
+            <div class="subtitle">Sorry, it looks like we disabled the chatbots you're looking for.</div>
+            <div class="subtitle">Please try again later!</div>
+        </div>
+    </div>
+    {%  endif %}
+
+{%  endblock %}
+
+
+{% block extrascripts %}
+    <script type="text/javascript">
+    window.STUDY_KEY = "{{ study.key or "" }}";
+    </script>
+{% endblock %}

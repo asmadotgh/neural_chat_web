@@ -1,0 +1,18 @@
+[Unit]
+Description=uWSGI Emperor service
+After=syslog.target
+
+[Service]
+User=www-data
+Group=www-data
+ExecStart=/opt/virtualenvironment/bin/uwsgi --enable-threads --lazy-apps --emperor /opt/django/deploy/vassals/
+Restart=always
+KillSignal=SIGQUIT
+Type=simple
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+Alias=uwsgi.service
+Alias=uwsgi.service

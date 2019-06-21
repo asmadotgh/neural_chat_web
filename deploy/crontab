@@ -1,0 +1,4 @@
+# This is just the example crontab that will run nightly backups!
+# Feel free to edit it as you see fit
+
+# 0 0,12 * * * python -c 'import random; import time; time.sleep(random.random() * 3600)' && /opt/certbot-auto renew

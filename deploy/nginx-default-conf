@@ -1,0 +1,42 @@
+upstream django {
+     server unix:///tmp/uwsgi.django.socket; # for a web port socket (we'll use this first)
+}
+
+server {
+
+     listen   80;
+     charset utf-8;
+     client_max_body_size 15M;
+     server_name [[ EDITME SERVER NAME ]];
+     # return 301 https://$server_name$request_uri;
+     
+     location /static {
+        expires 365d;
+        alias /opt/staticfiles/;
+     }
+
+     location /media {
+        expires 365d;
+        alias /opt/media/;
+     }
+
+     location /favicon.ico {
+        expires 365d;
+        alias /opt/staticfiles/favicon.ico;
+    }
+     location /robots.txt {
+        expires 365d;
+        alias /opt/staticfiles/robots.txt;
+    }
+
+    location / {
+         include uwsgi_params;
+         uwsgi_pass django;
+         uwsgi_param UWSGI_PYHOME /opt/django/;
+         uwsgi_param UWSGI_CHIDIR /opt/django/;
+         uwsgi_param UWSGI_SCRIPT project.wsgi;
+     }
+
+}
+
+

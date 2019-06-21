@@ -1,0 +1,699 @@
+* {
+  font-family: 'Overpass Mono', monospace;
+}
+html {
+  font-family: 'Overpass Mono', monospace;
+  background-color: black;
+  color: #00FF00;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.hidden {
+  display: none;
+}
+.content {
+  margin: 0px auto;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 60px rgba(0, 255, 0, 0.5), 20px 0px 70px rgba(0, 255, 0, 0.7), -20px 0px 70px rgba(0, 255, 0, 0.7);
+  padding: 30px;
+  background-color: #020;
+}
+strong {
+  font-weight: 700;
+  font-size: 1.05em;
+}
+.aside {
+  font-style: italic;
+}
+a {
+  color: #00FF00;
+}
+a:visited {
+  color: #00FF00;
+}
+@keyframes flicker {
+  0% {
+    opacity: 0.35218;
+  }
+  5% {
+    opacity: 0.54631;
+  }
+  10% {
+    opacity: 0.42162;
+  }
+  15% {
+    opacity: 0.32281;
+  }
+  20% {
+    opacity: 0.64841;
+  }
+  25% {
+    opacity: 0.44795;
+  }
+  30% {
+    opacity: 0.30339;
+  }
+  35% {
+    opacity: 0.96539;
+  }
+  40% {
+    opacity: 0.72515;
+  }
+  45% {
+    opacity: 0.65073;
+  }
+  50% {
+    opacity: 0.84213;
+  }
+  55% {
+    opacity: 0.60697;
+  }
+  60% {
+    opacity: 0.57798;
+  }
+  65% {
+    opacity: 0.38626;
+  }
+  70% {
+    opacity: 0.45701;
+  }
+  75% {
+    opacity: 0.76252;
+  }
+  80% {
+    opacity: 0.42619;
+  }
+  85% {
+    opacity: 0.83635;
+  }
+  90% {
+    opacity: 0.34095;
+  }
+  95% {
+    opacity: 0.55617;
+  }
+  100% {
+    opacity: 0.13109;
+  }
+}
+.content {
+  position: relative;
+  overflow: hidden;
+}
+.content::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.01);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+.content::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.03) 50%, rgba(230, 230, 230, 0.09) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.07), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+  z-index: 2;
+  background-size: 100% 3px, 4px 100%;
+  pointer-events: none;
+}
+.content .window {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background: #020;
+  overflow: hidden;
+  z-index: 1000;
+}
+.content .window .windowcontent {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  top: 30px;
+  bottom: 30px;
+  border: 4px solid #00FF00;
+  padding: 30px;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  box-sizing: border-box;
+}
+.content .window .title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.content .window .subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.content .window .chatbotchoicesborder {
+  border: 4px solid #00FF00;
+  width: 300px;
+  margin: 0 auto;
+  flex-grow: 1;
+  position: relative;
+}
+.content .window .chatbotchoices {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+}
+.content .window .chatbotchoices .choice {
+  border: 4px solid #00FF00;
+  background: rgba(0, 255, 0, 0.05);
+  margin-left: -4px;
+  display: block;
+  margin-right: 21px;
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  cursor: pointer;
+  border-top: none;
+}
+.content .chat {
+  font-size: 18px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.content .chat .chatlines {
+  position: absolute;
+  top: 0px;
+  bottom: 60px;
+  left: 0;
+  right: 0px;
+  padding-bottom: 80px;
+  padding-left: 20px;
+  padding-right: 25px;
+  padding-top: 60px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.content .chat .chatline {
+  cursor: default;
+  font-size: 18px;
+}
+.content .chat .close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: 4px solid #00FF00;
+  cursor: pointer;
+  background: rgba(0, 255, 0, 0.05);
+  padding: 0px 20px;
+  background-color: #020;
+}
+.content .chat .close span {
+  vertical-align: middle;
+}
+.content .chat .close img {
+  width: 30px;
+  height: 30px;
+  margin-right: 0px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.content .inputarea {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.content .input {
+  border: 4px solid #00FF00;
+  line-height: 50px;
+  padding: 0px 150px 0 20px;
+  width: 100%;
+  display: block;
+  background-color: #020;
+  color: #00FF00;
+  font-size: 18px;
+  outline-style: none;
+  box-shadow: none;
+}
+.content .button {
+  border: 4px solid #00FF00;
+  line-height: 50px;
+  padding: 0px 30px;
+  cursor: pointer;
+  display: inline-block;
+  background-color: #020;
+  color: #00FF00;
+  font-size: 18px;
+  outline-style: none;
+  box-shadow: none;
+  text-align: center;
+}
+.content .button .loading {
+  height: 29px;
+  width: 29px;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -14.5px;
+  margin-top: -14.5px;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+.content .chat .button {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  float: right;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 800px) {
+  html {
+    padding: 0px;
+  }
+  .content {
+    height: 100%;
+    width: 100%;
+  }
+  .content .window .windowcontent {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .content .window .title {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  .content .window .subtitle {
+    font-size: 16px !important;
+  }
+  .content .window .title,
+  .content .window .subtitle {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .content .chat .chatlines {
+    top: 80px;
+  }
+  .content .chat .chatlines .ps__rail-y {
+    margin-top: 0;
+  }
+  .content .chat .chatline {
+    font-size: 16px;
+  }
+  .content .chat .button {
+    right: 0;
+  }
+  .content .chat .inputarea {
+    padding-right: 0;
+  }
+  form .question-label {
+    font-size: 16px;
+  }
+  .window.ratewindow .windowcontent {
+    padding-left: 30px;
+    padding-right: 40px;
+  }
+  .window.ratewindow .windowcontent .ps__rail-y {
+    width: 15px;
+  }
+  .mturk .help {
+    font-size: 16px !important;
+  }
+}
+.ps__rail-y {
+  width: 25px;
+  box-sizing: border-box;
+  background: rgba(0, 255, 0, 0.05) !important;
+  border: 4px solid #00FF00;
+  top: 50px;
+  display: block;
+  opacity: 1 !important;
+  bottom: 0px;
+  z-index: 100;
+}
+.ps__thumb-y {
+  background: rgba(0, 255, 0, 0.2) !important;
+  border: 4px solid #00FF00;
+  border-radius: 0;
+  width: 100% !important;
+  right: -4px;
+  margin-top: -4px;
+  bottom: -4px;
+}
+.chat .ps__rail-y {
+  margin-top: 70px;
+  margin-bottom: 10px;
+}
+.windowcontent > .ps__rail-y {
+  right: 6px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+form {
+  text-align: center;
+}
+form .question-label {
+  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+form .form-question {
+  margin-bottom: 40px;
+}
+form textarea {
+  margin-top: 20px;
+  border: 4px solid #00FF00;
+  padding: 10px;
+  width: 90%;
+  max-width: 500px;
+  display: inline-block;
+  background-color: #020;
+  color: #00FF00;
+  font-size: 16px;
+  outline-style: none;
+  box-shadow: none;
+  resize: none;
+}
+form textarea::placeholder {
+  color: rgba(0, 255, 0, 0.5);
+}
+form .button {
+  position: relative !important;
+  float: none !important;
+}
+form .radios {
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto 5px;
+  padding-right: 20px;
+  height: 35px;
+}
+form .likert-labels {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 90%;
+  max-width: 450px;
+}
+form .likert-labels .left {
+  float: left;
+}
+form .likert-labels .right {
+  float: right;
+}
+.error-message {
+  display: none;
+}
+.error .error-message {
+  display: block;
+  color: #cc0000;
+  border-color: #cc0000;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+.chatratethanks .button {
+  width: 250px;
+  margin: 40px auto;
+}
+/**
+ * For the Radio Buttons
+ */
+/* Customize the label (the container) */
+.radio {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Hide the browser's default radio button */
+  /* Create a custom radio button */
+  /* On mouse-over, add a grey background color */
+  /* When the radio button is checked, add a blue background */
+}
+.radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.radio .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 4px solid #00FF00;
+  box-sizing: border-box;
+}
+.radio:hover input ~ .checkmark {
+  background-color: rgba(0, 255, 0, 0.5);
+}
+.radio input:checked ~ .checkmark {
+  background-color: #00FF00;
+}
+.votes {
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  padding-right: 5px;
+  margin-left: -20px;
+  height: 18px;
+  vertical-align: middle;
+}
+.votes .upvote {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  display: inline-block;
+  cursor: pointer;
+  top: -3px;
+  position: absolute;
+  border-radius: 3px;
+  border-bottom: 10px solid rgba(0, 255, 0, 0.2);
+}
+.votes .upvote:hover {
+  border-bottom-color: rgba(0, 255, 0, 0.4);
+}
+.votes .upvote.active {
+  border-bottom-color: #00FF00;
+}
+.votes .downvote {
+  width: 0;
+  height: 0;
+  display: inline-block;
+  margin-top: 5px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  cursor: pointer;
+  bottom: -3px;
+  position: absolute;
+  border-radius: 3px;
+  border-top: 10px solid rgba(0, 255, 0, 0.2);
+}
+.votes .downvote:hover {
+  border-top-color: rgba(0, 255, 0, 0.4);
+}
+.votes .downvote.active {
+  border-top-color: #00FF00;
+}
+.buttons-container {
+  text-align: center;
+}
+.buttons-container .button {
+  margin: 50px 20px;
+  width: 170px;
+}
+.buttons-container .confirm {
+  background-color: rgba(0, 255, 0, 0.1);
+}
+.content .window .consentform {
+  padding-right: 35px;
+}
+.content .window .consentform .subtitle {
+  font-size: 1.4em;
+  margin: 10px auto 10px;
+  max-width: 900px;
+  text-align: center;
+  padding: 0px 40px;
+}
+.content .window .consentform h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  text-align: center;
+  margin: 30px 0 30px;
+}
+.content .window .consentform h3 {
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: center;
+}
+.content .window .consentform p {
+  margin: 10px 0 20px;
+}
+.content .window .consentform .consenttext {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 0 20px;
+}
+.content .window .consentform .confirmtext {
+  font-size: 1.6em;
+  margin: 40px auto 20px;
+  text-align: center;
+}
+.content .window .consentform .consentbutton {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.content .window .consentform .consentbutton .button {
+  width: 200px;
+}
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4, end) 1000ms infinite;
+  animation: ellipsis steps(4, end) 1000ms infinite;
+  content: "...";
+  /* ascii code for the ellipsis character */
+  width: 0px;
+}
+@keyframes ellipsis {
+  to {
+    width: 2.5em;
+  }
+}
+@-webkit-keyframes ellipsis {
+  to {
+    width: 2.5em;
+  }
+}
+.content .window .windowcontent.widescreenonly {
+  display: none;
+}
+@media only screen and (min-width: 1200px) {
+  .content .window .windowcontent.widescreenonly {
+    display: block;
+  }
+  .content .window .windowcontent.left {
+    position: absolute;
+    left: 30px;
+    right: 60%;
+    margin-right: 15px;
+  }
+  .content .window .windowcontent.right {
+    position: absolute;
+    left: 40%;
+    margin-left: 15px;
+  }
+  .content .window .windowcontent.chathistory {
+    font-size: 18px;
+  }
+  .content .window .windowcontent.chathistory h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+}
+.content .window.tutorial .windowcontent {
+  padding: 30px;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+  bottom: auto;
+  padding-bottom: 100px;
+}
+@media all and (min-width: 800px) {
+  .content .window.tutorial .windowcontent {
+    width: 600px;
+    left: 50%;
+    right: auto;
+    transform: perspective(1px) translateY(-50%) translateX(-50%);
+  }
+}
+.content .window.tutorial .tutorialpage {
+  display: none;
+}
+.content .window.tutorial .button {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
+.content .window.tutorial .title {
+  margin-bottom: 30px;
+  font-size: 26px;
+}
+.content .window.tutorial .title.titlebig {
+  font-size: 26px;
+}
+.content .window.tutorial strong {
+  font-size: 1.3em;
+}
+.content .window.tutorial p {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.content .window.tutorial img {
+  margin: 0px auto 30px;
+  height: 100px;
+  display: block;
+  box-shadow: 0px 0px 5px 2px #00FF00;
+}
+.content .window.chatratethanks .mturk {
+  text-align: center;
+  margin: 35px 0;
+}
+.content .window.chatratethanks .mturk .help {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.content .window.chatratethanks .mturk .subtitle {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.content .window.chatratethanks .mturk-code {
+  margin-top: 40px;
+  font-size: 40px;
+}
+.content .window.chatratethanks .subtitle {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+/*# sourceMappingURL=style.css.map */

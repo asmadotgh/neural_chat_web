@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>{% block title %}E.L.S.A.{% endblock %}</title>
+    <link rel="stylesheet" href="/static/reset.css">
+    {% block extracss %}{% endblock %}
+    <link rel="stylesheet" href="/static/perfectscrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/static/style.css{{ cachebreak() }}">
+    <link rel="shortcut icon" href="/static/image/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass+Mono:400,600,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no, user-scalable=0"/>
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+    <div class="content overlay">
+        {%  block content %}{%  endblock %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    {% block extrascripts %}{% endblock %}
+    <script src="/static/js/cookie.js"></script>
+    <script src="/static/perfectscrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/static/script.js{{ cachebreak() }}"></script>
+</body>
+</html>
