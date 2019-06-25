@@ -145,7 +145,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ## Reference
-If you use this code, please reference the following paper:
+If you use this code, please reference [the following paper](https://arxiv.org/abs/1906.09308):
 
 ```
 @article{ghandeharioun2019approximating,
