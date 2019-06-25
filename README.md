@@ -151,7 +151,7 @@ If you use this code, please reference the following paper:
 @article{ghandeharioun2019approximating,
   title={Approximating Interactive Human Evaluation with Self-Play for Open-Domain Dialog Systems},
   author={Ghandeharioun, Asma and Shen, Judy and Jaques, Natasha and Ferguson, Craig and Jones, Noah, and Lapedriza, Agata and Picard, Rosalind},
-  journal={arXiv preprint arXiv:},
+  journal={arXiv preprint arXiv:1906.09308},
   year={2019}
 }
 ```
