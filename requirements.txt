@@ -1,6 +1,6 @@
 Django==2.1.7
 inflect==2.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 jinja2-pluralize==0.3.0
 MarkupSafe==1.1.0
 pytz==2018.9
