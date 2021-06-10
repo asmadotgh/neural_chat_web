@@ -1,4 +1,4 @@
-Django==2.1.7
+Django==2.2.24
 inflect==2.1.0
 Jinja2==2.10
 jinja2-pluralize==0.3.0
